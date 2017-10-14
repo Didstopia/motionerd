@@ -22,6 +22,7 @@ _To be implemented._
 ## Building
 
 ```sh
+go get github.com/goreleaser/goreleaser
 goreleaser --snapshot --rm-dist
 ```
 
