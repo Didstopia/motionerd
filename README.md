@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/Didstopia/motionerd.svg?branch=master)](https://travis-ci.org/Didstopia/motionerd)
 [![codecov](https://codecov.io/gh/Didstopia/motionerd/branch/master/graph/badge.svg)](https://codecov.io/gh/Didstopia/motionerd)
 
-A continuous motion detection system in GoLang.
+A continuous motion detection system written in GoLang.
 
 **NOTE: _Work in progress._**
 
