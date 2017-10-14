@@ -1,0 +1,36 @@
+# Disable sudo to enable containerization
+sudo: false
+
+# Setup Go language support
+language: go
+
+# Test against multiple versions of Go
+go:
+  - 1.8.x
+  - master
+
+# Install dependencies
+before_install:
+  - go get -t -v ./... # TODO: What does this actually do, apart from printing the package name?
+  - go get github.com/golang/lint/golint
+  - go get github.com/goreleaser/goreleaser # TODO: Do we need this or does the above install the dependencies for us?
+  - test -n "$GITHUB_TOKEN" && gem install github_changelog_generator
+
+# Generate code coverage
+install:
+  - go vet
+  - golint
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
+
+# Test, update changelog and build binaries
+script:
+  - go vet
+  - golint
+  - go test -tags=integration
+  - test -n "$GITHUB_TOKEN" && github_changelog_generator --token $GITHUB_TOKEN
+  - go build
+
+# Upload code coverage and build release binaries
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - test -n "$TRAVIS_TAG" && curl -sL https://git.io/goreleaser | bash

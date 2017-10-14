@@ -1,0 +1,9 @@
+{
+    // VSCode
+    "files.autoSave": "afterDelay",
+
+    // Go
+    "go.formatOnSave": false,
+    "go.gocodeAutoBuild": true,
+    "go.useLanguageServer": true
+}
