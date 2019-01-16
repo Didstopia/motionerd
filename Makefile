@@ -7,7 +7,7 @@ BINARY_VERSION?=0.0.1
 BINARY_OUTPUT?=motionerd
 EXTRA_FLAGS?=-mod=vendor
 
-.PHONY: all install build test clean deps upgrade version print
+.PHONY: all install build test clean deps upgrade print
 
 all: deps build
 
@@ -15,10 +15,7 @@ install:
 	go install -v $(EXTRA_FLAGS) -ldflags "-X main.Version=$(BINARY_VERSION)"
 
 build:
-	@$(GOPATH)/bin/packr2 clean
-	@$(GOPATH)/bin/packr2
 	go build -v $(EXTRA_FLAGS) -ldflags "-X main.Version=$(BINARY_VERSION)" -o $(BINARY_OUTPUT)
-	@$(GOPATH)/bin/packr2 clean
 
 test:
 	go test -v $(EXTRA_FLAGS) -race -coverprofile=coverage.txt -covermode=atomic ./...

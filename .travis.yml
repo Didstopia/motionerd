@@ -14,34 +14,29 @@ matrix:
       - make build
       - make test
       - make install
-      - make version
   - go: tip
     script:
       - make deps
       - make build
       - make test
       - make install
-      - make version
   - go: 1.11.x
     script:
       - make deps
       - make build
       - make test
       - make install
-      - make version
   - go: 1.10.x
     script:
       - make deps EXTRA_FLAGS=
       - make build EXTRA_FLAGS=
       - make test EXTRA_FLAGS=
       - make install EXTRA_FLAGS=
-      - make version EXTRA_FLAGS=
   - go: 1.9.x
     script:
       - make deps EXTRA_FLAGS=
       - make build EXTRA_FLAGS=
       - make install EXTRA_FLAGS=
-      - make version EXTRA_FLAGS=
 
 env:
   global:
