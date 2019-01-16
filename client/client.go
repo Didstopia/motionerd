@@ -2,6 +2,8 @@ package client
 
 import (
 	"errors"
+	"log"
+	"net/url"
 
 	"github.com/Didstopia/motionerd/client/module"
 )
@@ -9,18 +11,35 @@ import (
 // Client is a top-level abstraction for the connection logic
 type Client struct {
 	Module        module.Module
-	ConnectionURL string
+	ConnectionURL *url.URL
 }
 
 // NewClient creates a new instance of Client and returns a reference to it
 func NewClient(connectionURL string) (*Client, error) {
-	// Validate the connection URL
-	if len(connectionURL) < 1 {
-		return nil, errors.New("invalid or empty connection URL: " + connectionURL)
+	log.Println("Creating a Client with URL:", connectionURL)
+
+	// Parse the connection URL
+	url, err := url.Parse(connectionURL)
+	if err != nil {
+		return nil, err
+	}
+
+	// Validate the scheme (eg. http://)
+	log.Println("Parsed connection URL scheme:", url.Scheme)
+	if url.Scheme == "" {
+		return nil, errors.New("missing scheme from connection URL: " + connectionURL)
 	}
 
 	// Create a new Client
 	c := &Client{}
+
+	// Create the appropriate module based on the scheme
+	module, err := module.NewModule(url.Scheme)
+	if err != nil {
+		return nil, err
+	}
+	c.Module = module
+	log.Println("Client module:", c.Module)
 
 	/*// Create and validate the RTSP client
 	c.RTSPClient = &rtspclient.New()
@@ -28,8 +47,8 @@ func NewClient(connectionURL string) (*Client, error) {
 		return errors.New("failed to create RTSP client")
 	}*/
 
-	// Store the connection string
-	c.ConnectionURL = connectionURL
+	// Store the connection URL
+	c.ConnectionURL = url
 
 	// Return the Client, and a nil error on success
 	return c, nil
@@ -37,6 +56,8 @@ func NewClient(connectionURL string) (*Client, error) {
 
 // Open the camera connection
 func (c *Client) Open() error {
+	log.Println("Opening connection with URL:", c.ConnectionURL)
+
 	/*// Attempt to connect to the RTSP server
 	if c.RTSPClient.DialRTSP() != true {
 		return errors.new("failed to open RTSP connection with URL: " + c.RTSPURL)
@@ -54,6 +75,8 @@ func (c *Client) Open() error {
 
 // Close the camera connection
 func (c *Client) Close() error {
+	log.Println("Closing connection with URL:", c.ConnectionURL)
+
 	/*// Close the RTSP connection
 	c.RTSPClient.Close()*/
 

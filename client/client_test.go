@@ -3,27 +3,29 @@ package client
 import "testing"
 
 func TestClient(t *testing.T) {
-	// Create a new Client with an invalid connection URL
-	invalidClient, err := NewClient("")
-	if invalidClient != nil {
-		t.Fatal("expected nil client with empty connection URL")
+	// Try creating invalid clients
+	if _, err := NewClient(""); err == nil {
+		t.Fatal("expected nil error with empty connection URL")
 	}
-	if err == nil {
+	if _, err := NewClient("DUMMY"); err == nil {
+		t.Fatal("expected nil error with empty connection URL")
+	}
+	if _, err := NewClient("WWW.DUMMY.COM"); err == nil {
 		t.Fatal("expected nil error with empty connection URL")
 	}
 
-	// Create a new Client
-	client, err := NewClient("DUMMY")
+	// Try creating a valid client
+	client, err := NewClient("http://localhost:3000/videostream.cgi")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	// Open the connection
+	// Try opening the client connection
 	if err := client.Open(); err != nil {
 		t.Fatal(err)
 	}
 
-	// Close the connection
+	// Try closing the client connection
 	if err := client.Close(); err != nil {
 		t.Fatal(err)
 	}
