@@ -21,13 +21,11 @@ _To be implemented._
 
 ## Building
 
-```sh
-goreleaser --snapshot --rm-dist
-```
+_To be implemented._
 
 ## License
 
-See [LICENSE.txt](LICENSE.txt).
+See [LICENSE](LICENSE).
 
 ## Stargazers
 

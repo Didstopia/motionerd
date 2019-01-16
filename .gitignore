@@ -1,19 +1,37 @@
-### Travis ###
-CHANGELOG.md
-
 ### Code Coverage ###
 coverage.txt
 
 ### Go ###
 # Binaries for programs and plugins
-bin/
-dist/
-pkg/
-symbolizer
 *.exe
 *.dll
 *.so
 *.dylib
+
+### Go Vendor Packages ###
+#vendor/
+
+# Other
+/go/
+/build/
+
+# Binaries for Go
+/debug
+/release
+/debug/
+/release/
+/motionerd
+
+# Environment variables
+.env
+.env*
+env
+env*
+
+
+# Packr
+/packrd/
+*-packr.go
 
 # Test binary, build with `go test -c`
 *.test

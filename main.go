@@ -1,10 +1,27 @@
 package main
 
-import "fmt"
+import (
+	"os"
 
-// Version is set automatically by GoReleaser
-var version = "development"
+	"github.com/Didstopia/motionerd/client"
+
+	_ "github.com/joho/godotenv/autoload"
+)
 
 func main() {
-	fmt.Println("Version:", version)
+	// Create a new client
+	client, err := client.NewClient(os.Getenv("CONNECTION_URL"))
+	if err != nil {
+		panic(err)
+	}
+
+	// Open the connection
+	if err := client.Open(); err != nil {
+		panic(err)
+	}
+
+	// Close the connection
+	if err := client.Close(); err != nil {
+		panic(err)
+	}
 }
